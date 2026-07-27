@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Work+Sans:wght@400;500;600&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Compass Pune — Real Estate Intelligence for Pune</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Work+Sans:wght@400;500;600&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --basalt:#221E1A;
+    --stone:#EFE7D8;
+    --stone-2:#E5DAC4;
+    --brick:#9E4429;
+    --brick-dark:#7E3520;
+    --gold:#BD9436;
+    --sage:#59654A;
+    --ink:#2A2620;
+    --ink-soft:#5B5347;
+    --line: rgba(42,38,32,0.14);
+    --radius: 2px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--stone);
+    color:var(--ink);
+    font-family:'Work Sans', sans-serif;
+    font-size:16px;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{ background:var(--gold); color:var(--basalt); }
+  a{ color:inherit; text-decoration:none; }
+  img,svg{display:block; max-width:100%;}
+  .wrap{ max-width:1240px; margin:0 auto; padding:0 32px; }
+  h1,h2,h3,h4{ font-family:'Fraunces', serif; font-weight:600; letter-spacing:-0.01em; color:var(--basalt); }
+  .eyebrow{
+    font-family:'Space Grotesk', monospace;
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--brick);
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:22px; height:1px; background:var(--brick);
+  }
+  .price{ font-family:'Space Grotesk', monospace; }
+  button{ font-family:inherit; cursor:pointer; }
+
+  /* ---------- HEADER ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(239,231,216,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 0;
+  }
+  .logo{
+    font-family:'Fraunces', serif; font-weight:700; font-size:21px; color:var(--basalt);
+    display:flex; align-items:baseline; gap:2px;
+  }
+  .logo span{ color:var(--brick); font-style:italic; font-weight:500; }
+  nav ul{ list-style:none; display:flex; gap:34px; }
+  nav a{ font-size:14px; color:var(--ink-soft); transition:color .2s; }
+  nav a:hover{ color:var(--brick); }
+  .nav-cta{
+    display:none;
+  }
+  @media(min-width:860px){
+    .nav-cta{ display:inline-flex; }
+  }
+  .btn{
+    font-size:13px; letter-spacing:.02em; font-weight:500;
+    padding:11px 20px; border-radius:var(--radius);
+    border:1px solid var(--basalt);
+    background:transparent;
+    color:var(--basalt);
+    transition:all .2s;
+  }
+  .btn:hover{ background:var(--basalt); color:var(--stone); }
+  .btn-solid{
+    background:var(--brick); color:var(--stone); border-color:var(--brick);
+  }
+  .btn-solid:hover{ background:var(--brick-dark); border-color:var(--brick-dark); color:var(--stone); }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:88px 0 60px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero-grid{
+    display:grid; grid-template-columns:1fr; gap:56px; align-items:center;
+  }
+  @media(min-width:920px){
+    .hero-grid{ grid-template-columns:1.1fr 0.9fr; }
+  }
+  .hero h1{
+    font-size:clamp(38px, 5.6vw, 64px);
+    line-height:1.03;
+    max-width:640px;
+  }
+  .hero h1 em{ color:var(--brick); font-style:italic; }
+  .hero p.lede{
+    margin-top:22px; font-size:17px; color:var(--ink-soft); max-width:480px;
+  }
+  .hero-actions{ margin-top:30px; display:flex; gap:14px; flex-wrap:wrap; }
+
+  .search-card{
+    margin-top:36px;
+    background:var(--basalt);
+    border-radius:var(--radius);
+    padding:22px;
+    display:grid; gap:14px;
+    grid-template-columns:1fr 1fr;
+  }
+  @media(min-width:560px){
+    .search-card{ grid-template-columns:repeat(3,1fr) auto; }
+  }
+  .search-card label{
+    font-family:'Space Grotesk',monospace; font-size:10px; letter-spacing:.1em;
+    text-transform:uppercase; color:#C7BCA3; display:block; margin-bottom:6px;
+  }
+  .search-card select{
+    width:100%; background:transparent; border:none; border-bottom:1px solid rgba(255,255,255,0.25);
+    color:var(--stone); font-size:14px; padding:6px 0; font-family:'Work Sans',sans-serif;
+  }
+  .search-card select:focus{ outline:none; border-color:var(--gold); }
+  .search-card option{ color:var(--basalt); }
+  .search-btn{
+    background:var(--gold); color:var(--basalt); border:none;
+    padding:12px 22px; font-weight:600; font-size:13px; border-radius:var(--radius);
+    align-self:end;
+    transition:background .2s;
+  }
+  .search-btn:hover{ background:#D3AD4D; }
+
+  .hero-art{ position:relative; }
+  .skyline{ width:100%; height:auto; }
+
+  /* ---------- STAT STRIP ---------- */
+  .stat-strip{
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+    padding:26px 0;
+  }
+  .stat-strip .wrap{
+    display:grid; grid-template-columns:repeat(2,1fr); gap:24px;
+  }
+  @media(min-width:760px){ .stat-strip .wrap{ grid-template-columns:repeat(4,1fr); } }
+  .stat b{
+    display:block; font-family:'Fraunces',serif; font-size:28px; color:var(--basalt);
+  }
+  .stat span{ font-size:12.5px; color:var(--ink-soft); }
+
+  /* ---------- SECTION HEADS ---------- */
+  section{ padding:84px 0; }
+  .section-head{
+    display:flex; flex-direction:column; gap:14px; margin-bottom:42px;
+    max-width:640px;
+  }
+  .section-head h2{ font-size:clamp(28px,3.4vw,38px); }
+  .section-head p{ color:var(--ink-soft); font-size:15.5px; }
+
+  /* ---------- CORRIDOR MAP (signature element) ---------- */
+  .corridor-section{ background:var(--basalt); color:var(--stone); }
+  .corridor-section .eyebrow{ color:var(--gold); }
+  .corridor-section .eyebrow::before{ background:var(--gold); }
+  .corridor-section .section-head h2{ color:var(--stone); }
+  .corridor-section .section-head p{ color:#C7BCA3; }
+
+  .corridor-rail{
+    position:relative;
+    overflow-x:auto;
+    padding:34px 4px 20px;
+    scrollbar-width:thin;
+    scrollbar-color:var(--gold) transparent;
+  }
+  .corridor-track{
+    position:relative;
+    display:flex;
+    gap:0;
+    min-width:max-content;
+    padding:0 4px;
+  }
+  .corridor-track::before{
+    content:"";
+    position:absolute; left:0; right:0; top:11px; height:2px;
+    background:repeating-linear-gradient(90deg, var(--gold) 0 10px, transparent 10px 16px);
+  }
+  .stop{
+    width:250px; flex:0 0 auto; padding:0 20px 0 0; position:relative;
+  }
+  .stop .node{
+    width:24px; height:24px; border-radius:50%;
+    background:var(--basalt); border:2px solid var(--gold);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Space Grotesk',monospace; font-size:10px; color:var(--gold);
+    margin-bottom:18px; position:relative; z-index:2;
+  }
+  .stop h4{ color:var(--stone); font-size:18px; margin-bottom:6px; line-height:1.15; }
+  .stop .tag{
+    font-family:'Space Grotesk',monospace; font-size:10.5px; letter-spacing:.06em;
+    text-transform:uppercase; color:var(--sage); background:rgba(255,255,255,0.06);
+    display:inline-block; padding:3px 8px; border-radius:2px; margin-bottom:10px;
+  }
+  .stop .locs{ font-size:12.5px; color:#B9AE93; margin-bottom:10px; line-height:1.5; }
+  .stop .range{
+    font-family:'Space Grotesk',monospace; font-size:15px; color:var(--stone);
+    border-top:1px solid rgba(255,255,255,0.14); padding-top:10px;
+  }
+  .stop .range small{ display:block; font-size:10px; color:#8E8570; letter-spacing:.05em; text-transform:uppercase; margin-top:2px;}
+
+  /* ---------- PROJECTS ---------- */
+  .project-grid{
+    display:grid; grid-template-columns:1fr; gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+  @media(min-width:700px){ .project-grid{ grid-template-columns:repeat(2,1fr);} }
+  @media(min-width:1080px){ .project-grid{ grid-template-columns:repeat(3,1fr);} }
+  .pcard{
+    background:var(--stone);
+    padding:28px;
+    display:flex; flex-direction:column; gap:12px;
+    transition:background .2s;
+  }
+  .pcard:hover{ background:var(--stone-2); }
+  .pcard-top{ display:flex; justify-content:space-between; align-items:flex-start; gap:10px; }
+  .pcard-top .status{
+    font-family:'Space Grotesk',monospace; font-size:10px; text-transform:uppercase; letter-spacing:.06em;
+    padding:3px 8px; border-radius:2px; border:1px solid var(--sage); color:var(--sage); white-space:nowrap;
+  }
+  .status.ready{ border-color:var(--brick); color:var(--brick); }
+  .pcard h3{ font-size:20px; line-height:1.15; }
+  .pcard .builder{ font-size:13px; color:var(--ink-soft); }
+  .pcard .loc{
+    font-size:12.5px; color:var(--brick); font-family:'Space Grotesk',monospace;
+    display:flex; align-items:center; gap:6px;
+  }
+  .pcard .divider{ height:1px; background:var(--line); margin:6px 0; }
+  .pcard .meta{ display:flex; justify-content:space-between; align-items:flex-end; }
+  .pcard .price{ font-size:19px; color:var(--basalt); font-weight:500; }
+  .pcard .price small{ display:block; font-family:'Work Sans',sans-serif; font-size:11px; color:var(--ink-soft); font-weight:400;}
+  .pcard .config{ font-size:12px; color:var(--ink-soft); text-align:right; }
+
+  /* ---------- MICRO-MARKET TABLE ---------- */
+  .table-wrap{ overflow-x:auto; border:1px solid var(--line); }
+  table{ width:100%; border-collapse:collapse; min-width:640px; }
+  th,td{ text-align:left; padding:16px 20px; font-size:14px; }
+  thead th{
+    font-family:'Space Grotesk',monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--ink-soft); background:var(--stone-2); border-bottom:1px solid var(--line);
+  }
+  tbody tr{ border-bottom:1px solid var(--line); }
+  tbody tr:last-child{ border-bottom:none; }
+  tbody tr:hover{ background:rgba(158,68,41,0.05); }
+  td.loc-name{ font-family:'Fraunces',serif; font-weight:600; color:var(--basalt); }
+  td.price-cell{ font-family:'Space Grotesk',monospace; }
+  .table-note{ font-size:12.5px; color:var(--ink-soft); margin-top:14px; }
+
+  /* ---------- BUILDERS ---------- */
+  .builder-row{ display:flex; flex-wrap:wrap; gap:10px; }
+  .chip{
+    border:1px solid var(--line); padding:10px 16px; font-size:13.5px; border-radius:20px;
+    color:var(--ink-soft); background:var(--stone-2); transition:all .2s;
+  }
+  .chip:hover{ border-color:var(--brick); color:var(--brick); background:var(--stone); }
+
+  /* ---------- GUIDES ---------- */
+  .guide-grid{
+    display:grid; grid-template-columns:1fr; gap:1px; background:var(--line); border:1px solid var(--line);
+  }
+  @media(min-width:760px){ .guide-grid{ grid-template-columns:repeat(2,1fr);} }
+  .gcard{
+    background:var(--stone); padding:30px; display:flex; flex-direction:column; gap:14px; transition:background .2s;
+  }
+  .gcard:hover{ background:var(--stone-2); }
+  .gcard .num{ font-family:'Space Grotesk',monospace; font-size:12px; color:var(--brick); }
+  .gcard h3{ font-size:21px; line-height:1.2; }
+  .gcard p{ font-size:14px; color:var(--ink-soft); }
+  .gcard .read{ font-size:13px; color:var(--brick); font-weight:500; margin-top:auto; }
+
+  /* ---------- CTA / FOOTER ---------- */
+  .cta-band{
+    background:var(--brick); color:var(--stone); padding:64px 0; text-align:center;
+  }
+  .cta-band h2{ color:var(--stone); font-size:clamp(26px,3.6vw,38px); max-width:600px; margin:0 auto 16px; }
+  .cta-band p{ color:#EAD2C6; max-width:460px; margin:0 auto 28px; font-size:15px; }
+  .cta-band .btn{ border-color:var(--stone); color:var(--stone); }
+  .cta-band .btn:hover{ background:var(--stone); color:var(--brick); }
+
+  footer{ background:var(--basalt); color:#C7BCA3; padding:56px 0 30px; }
+  .foot-grid{ display:grid; grid-template-columns:1fr; gap:36px; margin-bottom:40px; }
+  @media(min-width:760px){ .foot-grid{ grid-template-columns:2fr repeat(3,1fr); } }
+  footer .logo{ color:var(--stone); }
+  footer p.about{ font-size:13.5px; margin-top:12px; max-width:280px; color:#9C9280; }
+  footer h5{
+    font-family:'Space Grotesk',monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase;
+    color:#8E8570; margin-bottom:14px;
+  }
+  footer ul{ list-style:none; display:flex; flex-direction:column; gap:9px; }
+  footer a{ font-size:13.5px; color:#C7BCA3; transition:color .2s; }
+  footer a:hover{ color:var(--gold); }
+  .foot-bottom{
+    border-top:1px solid rgba(255,255,255,0.1); padding-top:22px;
+    display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;
+    font-size:12px; color:#8E8570;
+  }
+
+  /* reveal animation */
+  .reveal{ opacity:0; transform:translateY(16px); transition:opacity .6s ease, transform .6s ease; }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+  @media (prefers-reduced-motion: reduce){
+    .reveal{ opacity:1; transform:none; transition:none; }
+    html{ scroll-behavior:auto; }
+  }
+
+  :focus-visible{ outline:2px solid var(--brick); outline-offset:2px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav-inner">
+    <div class="logo">Compass<span>Pune</span></div>
+    <nav>
+      <ul>
+        <li><a href="#corridors">Corridors</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#markets">Price Snapshot</a></li>
+        <li><a href="#guides">Guides</a></li>
+      </ul>
+    </nav>
+    <a href="#projects" class="btn btn-solid nav-cta">Browse Projects</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="eyebrow">Pune, Maharashtra</p>
+      <h1>Understand Pune's real estate <em>before</em> you walk into a site office.</h1>
+      <p class="lede">Six growth corridors, hundreds of live launches, and a lot of sales pressure. We map the city by geography and price — not by whoever's advertising loudest this week.</p>
+      <div class="hero-actions">
+        <a href="#projects" class="btn btn-solid">See featured projects</a>
+        <a href="#corridors" class="btn">Explore the corridor map</a>
+      </div>
+
+      <form class="search-card" onsubmit="return false;">
+        <div>
+          <label for="loc">Corridor</label>
+          <select id="loc">
+            <option>Hinjewadi–Wakad–Baner</option>
+            <option>Kharadi–Magarpatta–Hadapsar</option>
+            <option>Balewadi–Aundh–Bavdhan</option>
+            <option>Kothrud–Warje–NIBM</option>
+            <option>PCMC–Mamurdi–Punawale</option>
+            <option>Koregaon Park–Bund Garden</option>
+          </select>
+        </div>
+        <div>
+          <label for="bud">Budget</label>
+          <select id="bud">
+            <option>Under ₹80L</option>
+            <option>₹80L – ₹1.5Cr</option>
+            <option>₹1.5Cr – ₹3Cr</option>
+            <option>₹3Cr and above</option>
+          </select>
+        </div>
+        <div>
+          <label for="bhk">Configuration</label>
+          <select id="bhk">
+            <option>1–2 BHK</option>
+            <option>3 BHK</option>
+            <option>4 BHK and above</option>
+          </select>
+        </div>
+        <button class="search-btn" type="submit">Search →</button>
+      </form>
+    </div>
+
+    <div class="hero-art">
+      <svg class="skyline" viewBox="0 0 480 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Illustration of Pune hills and skyline with a growth corridor line">
+        <rect x="0" y="0" width="480" height="420" fill="none"/>
+        <path d="M0 300 L60 250 L110 290 L170 220 L230 270 L300 200 L360 260 L420 235 L480 280 L480 420 L0 420 Z" fill="#5C6749" opacity="0.35"/>
+        <path d="M0 340 L70 300 L130 330 L200 280 L260 320 L330 275 L400 315 L480 300 L480 420 L0 420 Z" fill="#59654A" opacity="0.55"/>
+        <g fill="#9E4429">
+          <rect x="60" y="230" width="20" height="110" opacity="0.9"/>
+          <rect x="88" y="200" width="16" height="140" opacity="0.85"/>
+          <rect x="150" y="245" width="22" height="95" opacity="0.9"/>
+          <rect x="260" y="215" width="18" height="125" opacity="0.9"/>
+          <rect x="290" y="255" width="20" height="85" opacity="0.85"/>
+          <rect x="350" y="190" width="16" height="150" opacity="0.9"/>
+          <rect x="380" y="235" width="20" height="105" opacity="0.85"/>
+        </g>
+        <g stroke="#BD9436" stroke-width="2" stroke-dasharray="1 9" stroke-linecap="round">
+          <path d="M10 360 C 120 330, 240 350, 470 300" fill="none"/>
+        </g>
+        <g fill="#BD9436">
+          <circle cx="10" cy="360" r="5"/>
+          <circle cx="150" cy="340" r="5"/>
+          <circle cx="300" cy="335" r="5"/>
+          <circle cx="470" cy="300" r="5"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<div class="stat-strip">
+  <div class="wrap">
+    <div class="stat"><b>1,300+</b><span>active projects tracked across Pune MMR</span></div>
+    <div class="stat"><b>6</b><span>distinct growth corridors, each with its own price logic</span></div>
+    <div class="stat"><b>₹45L–₹45Cr</b><span>range of live listings, from PCMC studios to Bund Garden penthouses</span></div>
+    <div class="stat"><b>25+</b><span>developers with current Pune launches</span></div>
+  </div>
+</div>
+
+<section id="corridors" class="corridor-section">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">The corridor map</p>
+      <h2>Pune doesn't have one market. It has six.</h2>
+      <p>Price in this city follows infrastructure, not just distance from Shivajinagar. Scroll along the line — each stop is a corridor with its own IT anchor, price band, and buyer profile.</p>
+    </div>
+  </div>
+  <div class="corridor-rail">
+    <div class="corridor-track">
+
+      <div class="stop reveal">
+        <div class="node">01</div>
+        <span class="tag">West IT Corridor</span>
+        <h4>Hinjewadi – Wakad – Baner</h4>
+        <p class="locs">Anchored by Rajiv Gandhi Infotech Park. Highest concentration of new launches in the city.</p>
+        <p class="range">₹75L – ₹8Cr<small>Studio to 5BHK penthouse</small></p>
+      </div>
+
+      <div class="stop reveal">
+        <div class="node">02</div>
+        <span class="tag">East IT Corridor</span>
+        <h4>Kharadi – Magarpatta – Hadapsar</h4>
+        <p class="locs">EON IT Park and Magarpatta City drive demand. Fastest-growing rental yields in Pune.</p>
+        <p class="range">₹85L – ₹7.5Cr<small>2BHK to 4BHK villas</small></p>
+      </div>
+
+      <div class="stop reveal">
+        <div class="node">03</div>
+        <span class="tag">Riverside &amp; NW</span>
+        <h4>Balewadi – Aundh – Bavdhan</h4>
+        <p class="locs">Established residential belt near the Mula-Mutha, close to both IT corridors.</p>
+        <p class="range">₹1.0Cr – ₹3.9Cr<small>Mid to upper-mid segment</small></p>
+      </div>
+
+      <div class="stop reveal">
+        <div class="node">04</div>
+        <span class="tag">SW / Old Pune Fringe</span>
+        <h4>Kothrud – Warje – NIBM</h4>
+        <p class="locs">Legacy Pune neighbourhoods redeveloping fast, walkable to the old city core.</p>
+        <p class="range">₹95L – ₹13Cr<small>Widest price spread in the city</small></p>
+      </div>
+
+      <div class="stop reveal">
+        <div class="node">05</div>
+        <span class="tag">Affordable &amp; Industrial</span>
+        <h4>PCMC – Mamurdi – Punawale</h4>
+        <p class="locs">Pimpri-Chinchwad's industrial base plus new affordable-housing supply.</p>
+        <p class="range">₹52L – ₹3.2Cr<small>Best entry-level value</small></p>
+      </div>
+
+      <div class="stop reveal">
+        <div class="node">06</div>
+        <span class="tag">Central Premium</span>
+        <h4>Koregaon Park – Bund Garden</h4>
+        <p class="locs">Pune's oldest premium address. Low supply, and it shows in the price ceiling.</p>
+        <p class="range">₹99L – ₹45Cr<small>City's ultra-luxury pocket</small></p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">Featured launches</p>
+      <h2>A cross-section of what's actually selling right now</h2>
+      <p>Picked to span every corridor and every budget band — from a ₹55L 1BHK in Manjari to a ₹45Cr penthouse on Bund Garden Road.</p>
+    </div>
+
+    <div class="project-grid reveal">
+
+      <div class="pcard">
+        <div class="pcard-top"><span class="loc">Hinjewadi</span><span class="status">Dec 2029</span></div>
+        <h3>Shapoorji Joyville Vyomora</h3>
+        <p class="builder">Shapoorji Pallonji Group</p>
+        <div class="divider"></div>
+        <div class="meta">
+          <div class="price">₹84.99L – 1.89Cr<small>All-inclusive</small></div>
+          <div class="config">2–3 BHK<br>685–1434 sqft</div>
+        </div>
+      </div>
+
+      <div class="pcard">
+        <div class="pcard-top"><span class="loc">Kharadi</span><span class="status">Aug 2032</span></div>
+        <h3>Godrej Ivara</h3>
+        <p class="builder">Godrej Properties</p>
+        <div class="divider"></div>
+        <div class="meta">
+          <div class="price">₹1.15Cr – 2.94Cr<small>All-inclusive</small></div>
+          <div class="config">2–4 BHK<br>729–1580 sqft</div>
+        </div>
+      </div>
+
+      <div class="pcard">
+        <div class="pcard-top"><span class="loc">Bhugaon</span><span class="status">Jun 2031</span></div>
+        <h3>Kolte Patil The Winds</h3>
+        <p class="builder">Kolte Patil Developers</p>
+        <div class="divider"></div>
+        <div class="meta">
+          <div class="price">₹79.50L – 1.05Cr<small>All-inclusive</small></div>
+          <div class="config">2–3 BHK<br>765–1001 sqft</div>
+        </div>
+      </div>
+
+      <div class="pcard">
+        <div class="pcard-top"><span class="loc">Balewadi</span><span class="status">Mar 2030</span></div>
+        <h3>VJ Palladio Presidential Suites</h3>
+        <p class="builder">Vilas Javdekar Developers</p>
+        <div class="divider"></div>
+        <div class="meta">
+          <div class="price">₹1.50Cr – 2.50Cr<small>All-inclusive</small></div>
+          <div class="config">3–4 BHK<br>1073–1590 sqft</div>
+        </div>
+      </div>
+
+      <div class="pcard">
+        <div class="pcard-top"><span class="loc">Kothrud</span><span class="status">Mar 2027</span></div>
+        <h3>Sobha Nesara</h3>
+        <p class="builder">Sobha Limited</p>
+        <div class="divider"></div>
+        <div class="meta">
+          <div class="price">₹2.12Cr – 5.55Cr<small>All-inclusive</small></div>
+          <div class="config">3–4.5 BHK<br>1068–2387 sqft</div>
+        </div>
+      </div>
+
+      <div class="pcard">
+        <div class="pcard-top"><span class="loc">Mundhwa</span><span class="status ready">Ready</span></div>
+        <h3>Adani Atelier Greens</h3>
+        <p class="builder">Adani Realty</p>
+        <div class="divider"></div>
+        <div class="meta">
+          <div class="price">₹1.52Cr – 4.63Cr<small>All-inclusive</small></div>
+          <div class="config">2–4.5 BHK<br>877–2261 sqft</div>
+        </div>
+      </div>
+
+      <div class="pcard">
+        <div class="pcard-top"><span class="loc">Manjari</span><span class="status">Jun 2031</span></div>
+        <h3>Birla Evam</h3>
+        <p class="builder">Birla Estates</p>
+        <div class="divider"></div>
+        <div class="meta">
+          <div class="price">₹55.00L – 1.36Cr<small>All-inclusive</small></div>
+          <div class="config">1–3 BHK<br>517–1122 sqft</div>
+        </div>
+      </div>
+
+      <div class="pcard">
+        <div class="pcard-top"><span class="loc">Bund Garden</span><span class="status">Apr 2028</span></div>
+        <h3>Lodha One</h3>
+        <p class="builder">Lodha Group</p>
+        <div class="divider"></div>
+        <div class="meta">
+          <div class="price">₹22.60Cr – 45.20Cr<small>All-inclusive</small></div>
+          <div class="config">5–6 BHK<br>6000–10000 sqft</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="markets" style="background:var(--stone-2);">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">Price snapshot</p>
+      <h2>What each corridor costs, at a glance</h2>
+      <p>Ranges pulled from current live listings in each corridor — useful for a first gut-check before you shortlist.</p>
+    </div>
+
+    <div class="table-wrap reveal">
+      <table>
+        <thead>
+          <tr><th>Corridor</th><th>Anchor locality</th><th>Price range</th><th>Typical config mix</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="loc-name">West IT Corridor</td><td>Hinjewadi, Wakad, Baner</td><td class="price-cell">₹75L – ₹8Cr</td><td>2–4 BHK</td></tr>
+          <tr><td class="loc-name">East IT Corridor</td><td>Kharadi, Magarpatta</td><td class="price-cell">₹85L – ₹7.5Cr</td><td>2–4 BHK</td></tr>
+          <tr><td class="loc-name">Riverside &amp; NW</td><td>Balewadi, Bavdhan</td><td class="price-cell">₹1.0Cr – ₹3.9Cr</td><td>2–3 BHK</td></tr>
+          <tr><td class="loc-name">SW / Old Pune Fringe</td><td>Kothrud, NIBM</td><td class="price-cell">₹95L – ₹13Cr</td><td>2–4.5 BHK</td></tr>
+          <tr><td class="loc-name">Affordable &amp; Industrial</td><td>Pimpri, Mamurdi, Punawale</td><td class="price-cell">₹52L – ₹3.2Cr</td><td>1–3 BHK</td></tr>
+          <tr><td class="loc-name">Central Premium</td><td>Koregaon Park, Bund Garden</td><td class="price-cell">₹99L – ₹45Cr</td><td>3–6 BHK</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="table-note">Ranges reflect listed unit prices across current projects in each corridor and will shift as new phases launch.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">Who's building</p>
+      <h2>Developers active in Pune right now</h2>
+    </div>
+    <div class="builder-row reveal">
+      <span class="chip">Godrej Properties</span>
+      <span class="chip">Lodha Group</span>
+      <span class="chip">Kolte Patil Developers</span>
+      <span class="chip">Shapoorji Pallonji Group</span>
+      <span class="chip">VTP Realty</span>
+      <span class="chip">Vilas Javdekar Developers</span>
+      <span class="chip">Mahindra Lifespace</span>
+      <span class="chip">Gera Developer</span>
+      <span class="chip">Hiranandani Group</span>
+      <span class="chip">Puravankara Group</span>
+      <span class="chip">Birla Estates</span>
+      <span class="chip">Kalpataru Group</span>
+      <span class="chip">Sobha Limited</span>
+      <span class="chip">Adani Realty</span>
+    </div>
+  </div>
+</section>
+
+<section id="guides" style="background:var(--stone-2);">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">Before you sign anything</p>
+      <h2>Guides for first-time Pune buyers</h2>
+      <p>The paperwork and math that site-visit sales teams tend to gloss over.</p>
+    </div>
+
+    <div class="guide-grid reveal">
+      <div class="gcard">
+        <span class="num">01 · Legal</span>
+        <h3>MahaRERA registration, and what it actually protects</h3>
+        <p>Every project on this page should carry a MahaRERA number — here's how to verify one, and what it does and doesn't guarantee about delivery timelines.</p>
+        <span class="read">Read the guide →</span>
+      </div>
+      <div class="gcard">
+        <span class="num">02 · Measurement</span>
+        <h3>Carpet area vs built-up vs super built-up</h3>
+        <p>Why the sqft figure on the brochure isn't the sqft figure you'll actually live in, and how the loading percentage changes the real price per square foot.</p>
+        <span class="read">Read the guide →</span>
+      </div>
+      <div class="gcard">
+        <span class="num">03 · Financing</span>
+        <h3>Home loans: LTV, pre-EMI, and the fine print</h3>
+        <p>How loan-to-value ratios work for under-construction property, what pre-EMI actually costs you, and the documents banks ask for in Pune specifically.</p>
+        <span class="read">Read the guide →</span>
+      </div>
+      <div class="gcard">
+        <span class="num">04 · Timing</span>
+        <h3>Ready-to-move vs under-construction, honestly compared</h3>
+        <p>The GST difference, the possession-delay risk, and why the "price gap" between the two is usually smaller than it first looks.</p>
+        <span class="read">Read the guide →</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="cta-band">
+  <div class="wrap">
+    <h2>Talk to someone who isn't on commission from a single builder.</h2>
+    <p>Tell us your corridor, budget and timeline — we'll shortlist three projects worth an actual site visit.</p>
+    <a href="#" class="btn">Get a shortlist</a>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="logo">Compass<span>Pune</span></div>
+        <p class="about">An independent, informational guide to Pune's residential real estate — corridors, current launches, and the paperwork that matters. Not a brokerage.</p>
+      </div>
+      <div>
+        <h5>Explore</h5>
+        <ul>
+          <li><a href="#corridors">Corridor map</a></li>
+          <li><a href="#projects">Featured projects</a></li>
+          <li><a href="#markets">Price snapshot</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Corridors</h5>
+        <ul>
+          <li><a href="#corridors">Hinjewadi–Wakad–Baner</a></li>
+          <li><a href="#corridors">Kharadi–Magarpatta</a></li>
+          <li><a href="#corridors">Kothrud–NIBM</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Guides</h5>
+        <ul>
+          <li><a href="#guides">MahaRERA basics</a></li>
+          <li><a href="#guides">Carpet vs built-up area</a></li>
+          <li><a href="#guides">Home loan basics</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Compass Pune. Informational content only — verify project and pricing details directly with the developer.</span>
+      <span>Pune, Maharashtra</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('in'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+</script>
+
+</body>
+</html>
