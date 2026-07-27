@@ -4,8 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { getProjects, Project } from '../lib/projects';
 
-// Shared corridor data — used by both the corridor map and the project filter,
-// so "search by corridor" always matches the same six zones described below.
+// Shared corridor data
 const CORRIDORS = [
   {
     node: '01', tag: 'West IT Corridor', title: 'Hinjewadi – Wakad – Baner',
@@ -47,7 +46,6 @@ const CORRIDORS = [
 
 const BUDGETS = ['Any budget', 'Under ₹80L', '₹80L – ₹1.5Cr', '₹1.5Cr – ₹3Cr', '₹3Cr and above'];
 
-// Parses strings like "₹78L" or "₹1.2Cr" into a lakh-denominated number.
 function parsePriceToLakh(price: string): number | null {
   const match = price.match(/([\d.]+)\s*(L|Cr)/i);
   if (!match) return null;
@@ -107,7 +105,7 @@ export default function HomePage() {
       <header>
         <div className="wrap nav-inner">
           <div className="logo">
-            Prop<span>Pune</span>
+            Pune<span>Square</span>
           </div>
           <nav>
             <ul>
@@ -137,9 +135,9 @@ export default function HomePage() {
             <svg
               className="skyline"
               viewBox="0 0 480 420"
-              xmlns="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShHtnLtzwMbyKhcbDK4zXyvH-CM8VhF2utkBtx_7uAVQ&s=10"
+              xmlns="http://www.w3.org/2000/svg"
               role="img"
-              aria-label="Illustration of Pune hills and skyline with a growth corridor line"
+              aria-label="Pune hills and skyline vector visualization"
             >
               <rect x="0" y="0" width="480" height="420" fill="none" />
               <path d="M0 300 L60 250 L110 290 L170 220 L230 270 L300 200 L360 260 L420 235 L480 280 L480 420 L0 420 Z" fill="#5C6749" opacity="0.35" />
@@ -168,7 +166,7 @@ export default function HomePage() {
       </section>
 
       <div className="stat-strip">
-        <div className="wrap">
+        <div className="wrap stat-grid">
           <div className="stat"><b>1,300+</b><span>active projects tracked across Pune MMR</span></div>
           <div className="stat"><b>6</b><span>distinct growth corridors, each with its own price logic</span></div>
           <div className="stat"><b>₹45L–₹45Cr</b><span>range of live listings, from PCMC studios to Bund Garden penthouses</span></div>
@@ -201,7 +199,7 @@ export default function HomePage() {
 
       <section id="projects">
         <div className="wrap">
-          <div className="section-head" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
+          <div className="section-head section-head-flex">
             <div>
               <p className="eyebrow">Active Inventory</p>
               <h2>Latest Projects</h2>
@@ -209,7 +207,6 @@ export default function HomePage() {
             <Link href="/agent" className="btn btn-solid">+ Add New Project</Link>
           </div>
 
-          {/* Modern, simplified search & filter bar — sits directly above the project grid */}
           <div className="finder">
             <div className="finder-bar">
               <div className="finder-field finder-search">
@@ -234,6 +231,8 @@ export default function HomePage() {
                   <option key={c.node} value={c.title}>{c.title}</option>
                 ))}
               </select>
+
+              <div className="finder-divider" />
 
               <select value={budget} onChange={(e) => setBudget(e.target.value)} aria-label="Filter by budget">
                 {BUDGETS.map((b) => (
@@ -283,6 +282,7 @@ export default function HomePage() {
           )}
         </div>
       </section>
+
       <section id="markets" style={{ background: 'var(--stone-2)' }}>
         <div className="wrap">
           <div className="section-head reveal">
@@ -378,7 +378,7 @@ export default function HomePage() {
         <div className="wrap">
           <div className="foot-grid">
             <div>
-              <div className="logo">Compass<span>Pune</span></div>
+              <div className="logo">Pune<span>Square</span></div>
               <p className="about">An independent, informational guide to Pune&apos;s residential real estate — corridors, current launches, and the paperwork that matters. Not a brokerage.</p>
             </div>
             <div>
@@ -407,19 +407,117 @@ export default function HomePage() {
             </div>
           </div>
           <div className="foot-bottom">
-            <span>© 2026 Compass Pune. Informational content only — verify project and pricing details directly with the developer.</span>
+            <span>© 2026 Pune Square. Informational content only — verify project and pricing details directly with the developer.</span>
             <span>Pune, Maharashtra</span>
           </div>
         </div>
       </footer>
 
       <style jsx>{`
+        /* Global Mobile Fixes */
+        .wrap {
+          width: 100%;
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 16px;
+          box-sizing: border-box;
+        }
+
+        .nav-inner {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          flex-wrap: wrap;
+          gap: 12px;
+          padding: 16px;
+        }
+
+        nav ul {
+          display: flex;
+          gap: 16px;
+          list-style: none;
+          padding: 0;
+          margin: 0;
+          flex-wrap: wrap;
+        }
+
+        .hero-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 32px;
+          align-items: center;
+          padding: 40px 16px;
+        }
+
+        .hero-art svg {
+          width: 100%;
+          height: auto;
+          max-width: 480px;
+        }
+
+        .stat-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          gap: 20px;
+          padding: 24px 16px;
+        }
+
+        .corridor-rail {
+          overflow-x: auto;
+          padding-bottom: 16px;
+          -webkit-overflow-scrolling: touch;
+        }
+
+        .corridor-track {
+          display: flex;
+          gap: 20px;
+          width: max-content;
+          padding: 0 16px;
+        }
+
+        .section-head-flex {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-end;
+          flex-wrap: wrap;
+          gap: 16px;
+        }
+
+        .table-wrap {
+          overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
+        }
+
+        .guide-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+          gap: 20px;
+        }
+
+        .foot-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+          gap: 32px;
+          padding: 40px 16px;
+        }
+
+        .foot-bottom {
+          display: flex;
+          justify-content: space-between;
+          flex-wrap: wrap;
+          gap: 12px;
+          padding: 20px 16px;
+          border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        /* Finder Section Styles */
         .finder {
           margin-top: 28px;
           display: flex;
           flex-direction: column;
           gap: 10px;
         }
+
         .finder-bar {
           display: flex;
           align-items: center;
@@ -431,6 +529,7 @@ export default function HomePage() {
           box-shadow: 0 1px 2px rgba(20, 20, 20, 0.04);
           flex-wrap: wrap;
         }
+
         .finder-field {
           display: flex;
           align-items: center;
@@ -438,10 +537,12 @@ export default function HomePage() {
           padding: 8px 14px;
           color: var(--ink-soft);
         }
+
         .finder-search {
           flex: 1 1 220px;
           min-width: 180px;
         }
+
         .finder-search input {
           border: none;
           outline: none;
@@ -451,16 +552,19 @@ export default function HomePage() {
           color: inherit;
           font-family: inherit;
         }
+
         .finder-search input::placeholder {
           color: var(--ink-soft);
           opacity: 0.75;
         }
+
         .finder-divider {
           width: 1px;
           height: 24px;
           background: rgba(20, 20, 20, 0.08);
           flex: 0 0 auto;
         }
+
         .finder select {
           border: none;
           outline: none;
@@ -473,10 +577,12 @@ export default function HomePage() {
           cursor: pointer;
           transition: background 0.15s ease;
         }
+
         .finder select:hover,
         .finder select:focus {
           background: var(--stone-2, #f2efe9);
         }
+
         .finder-meta {
           display: flex;
           align-items: center;
@@ -485,6 +591,7 @@ export default function HomePage() {
           font-size: 13px;
           color: var(--ink-soft);
         }
+
         .finder-clear {
           border: none;
           background: none;
@@ -494,18 +601,62 @@ export default function HomePage() {
           cursor: pointer;
           padding: 0;
         }
+
         .finder-clear:hover {
           text-decoration: underline;
         }
+
+        /* Mobile Breakpoint Adjustments */
+        @media (max-width: 768px) {
+          .hero-grid {
+            grid-template-columns: 1fr;
+            text-align: center;
+          }
+
+          .hero-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+          }
+
+          .hero-art {
+            display: flex;
+            justify-content: center;
+          }
+
+          .nav-inner {
+            flex-direction: column;
+            align-items: flex-start;
+          }
+
+          .nav-cta {
+            width: 100%;
+            text-align: center;
+          }
+        }
+
         @media (max-width: 640px) {
           .finder-bar {
-            border-radius: 20px;
+            border-radius: 16px;
+            flex-direction: column;
+            align-items: stretch;
+            padding: 8px;
           }
+
           .finder-divider {
             display: none;
           }
+
           .finder select {
             width: 100%;
+            border: 1px solid rgba(20, 20, 20, 0.08);
+            border-radius: 8px;
+            padding: 10px;
+          }
+
+          .finder-search {
+            border: 1px solid rgba(20, 20, 20, 0.08);
+            border-radius: 8px;
           }
         }
       `}</style>
