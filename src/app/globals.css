@@ -254,3 +254,35 @@
   visibility: visible !important;
   transform: none !important;
 }
+/* Responsive Grid & Layout Tweaks */
+.project-grid, 
+.guide-grid {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .project-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .project-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* Enable Horizontal Scroll on Mobile Table */
+.table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Horizontal Rail for Corridors */
+.corridor-rail {
+  overflow-x: auto;
+  padding-bottom: 1rem;
+}
