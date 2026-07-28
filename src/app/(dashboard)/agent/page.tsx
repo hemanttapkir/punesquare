@@ -41,6 +41,7 @@ export default function AgentPortal() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
     const created = saveProject({
       ...formData,
       imagesUrl,
@@ -48,7 +49,13 @@ export default function AgentPortal() {
       amenities,
       landmarks: formData.landmarks.split(',').map(s => s.trim()).filter(Boolean),
     });
-    router.push(`/projects/${created.slug}`);
+
+    // Guard against undefined or missing slugs before routing
+    if (created && created.slug) {
+      router.push(`/projects/${created.slug}`);
+    } else {
+      console.error('Failed to generate project slug:', created);
+    }
   };
 
   return (
@@ -62,6 +69,12 @@ export default function AgentPortal() {
           <input type="text" placeholder="Location (e.g. Punawale, Pune)" required value={formData.location} onChange={e => setFormData({...formData, location: e.target.value})} className="form-input" />
           <input type="text" placeholder="Starting Price (e.g. ₹96.3 L - ₹2.01 Cr)" required value={formData.price} onChange={e => setFormData({...formData, price: e.target.value})} className="form-input" />
           <input type="text" placeholder="MahaRERA Registration Number" value={formData.rera} onChange={e => setFormData({...formData, rera: e.target.value})} className="form-input" />
+        </div>
+
+        {/* Overview Description */}
+        <div>
+          <label className="form-label" style={{ display: 'block', marginBottom: '4px' }}>Project Overview</label>
+          <textarea rows={3} placeholder="Brief summary of the development, builder highlights..." value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} className="form-input" />
         </div>
 
         {/* Gallery */}
