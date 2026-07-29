@@ -2,7 +2,7 @@
 
 import React, { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
-import { getProjects, Project } from '../lib/projects';
+import { getProjects, Project } from '@/lib/projects';
 
 // Shared corridor data
 const CORRIDORS = [
