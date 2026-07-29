@@ -183,6 +183,36 @@
 
 /* Card Styles */
 .pcard {
+  overflow: hidden; /* Clips image corners if card has rounded borders */
+  padding: 0; /* Ensures image spans edge-to-edge if desired */
+}
+
+/* Container inside pcard padding */
+.pcard-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pcard-img {
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+  background: var(--stone-2, #f0eee9);
+}
+
+.pcard-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.pcard:hover .pcard-img img {
+  transform: scale(1.04); /* Subtle hover zoom effect */
+}
+.pcard {
   background: var(--stone);
   padding: 24px;
   border: 1px solid var(--line); /* Border moved directly onto cards */
