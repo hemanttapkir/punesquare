@@ -10,16 +10,40 @@ export default function ProjectDetailPage() {
   const slug = params?.slug as string | undefined;
   const [project, setProject] = useState<Project | null>(null);
   const [activeImage, setActiveImage] = useState<string>('');
+  const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
-    if (typeof slug === 'string') {
-      const found = getProjectBySlug(slug);
+    if (typeof slug !== 'string') return;
+
+    let cancelled = false;
+
+    async function loadProject() {
+      const found = await getProjectBySlug(slug as string);
+      if (cancelled) return;
+
       if (found) {
         setProject(found);
         if (found.imagesUrl?.length) setActiveImage(found.imagesUrl[0]);
+      } else {
+        setNotFound(true);
       }
     }
+
+    loadProject();
+
+    return () => {
+      cancelled = true;
+    };
   }, [slug]);
+
+  if (notFound) {
+    return (
+      <div className="wrap" style={{ padding: '40px' }}>
+        <p>We couldn&apos;t find that listing.</p>
+        <Link href="/" className="btn" style={{ marginTop: '16px', display: 'inline-block' }}>← Back to Listings</Link>
+      </div>
+    );
+  }
 
   if (!project) return <div className="wrap" style={{ padding: '40px' }}>Loading listing...</div>;
 
