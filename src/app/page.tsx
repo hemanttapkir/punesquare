@@ -197,135 +197,115 @@ export default function HomePage() {
         </div>
       </section>
 
-   <section id="projects">
-  <div className="wrap">
-    <div className="section-head section-head-flex">
-      <div>
-        <p className="eyebrow">Active Inventory</p>
-        <h2>Latest Projects</h2>
-      </div>
-      <Link href="/agent" className="btn btn-solid">+ Add New Project</Link>
-    </div>
-
-    <div className="finder">
-      <div className="finder-bar">
-        <div className="finder-field finder-search">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <circle cx="11" cy="11" r="7" />
-            <line x1="21" y1="21" x2="16.65" y2="16.65" />
-          </svg>
-          <input
-            type="text"
-            placeholder="Search by project name…"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            aria-label="Search by project name"
-          />
-        </div>
-
-        <div className="finder-divider" />
-
-        <select value={corridor} onChange={(e) => setCorridor(e.target.value)} aria-label="Filter by corridor">
-          <option>All corridors</option>
-          {CORRIDORS.map((c) => (
-            <option key={c.node} value={c.title}>{c.title}</option>
-          ))}
-        </select>
-
-        <div className="finder-divider" />
-
-        <select value={budget} onChange={(e) => setBudget(e.target.value)} aria-label="Filter by budget">
-          {BUDGETS.map((b) => (
-            <option key={b} value={b}>{b}</option>
-          ))}
-        </select>
-      </div>
-
-      <div className="finder-meta">
-        <span>{filteredProjects.length} of {projects.length} projects match</span>
-        {filtersActive && (
-          <button type="button" className="finder-clear" onClick={clearFilters}>Clear filters</button>
-        )}
-      </div>
-    </div>
-
-    {projects.length === 0 ? (
-      <p style={{ color: 'var(--ink-soft)', marginTop: '16px' }}>
-        No custom projects added yet. <Link href="/agent" style={{ color: 'var(--brick)', fontWeight: 600 }}>Add one now →</Link>
-      </p>
-    ) : filteredProjects.length === 0 ? (
-      <p style={{ color: 'var(--ink-soft)', marginTop: '16px' }}>
-        No projects match your filters. <button type="button" className="finder-clear" onClick={clearFilters} style={{ marginLeft: '4px' }}>Clear filters</button>
-      </p>
-    ) : (
-    <div className="project-grid" style={{ marginTop: '24px' }}>
-  {filteredProjects.map((item) => {
-    // Get the first uploaded image from imagesUrl, or use fallback
-    const cardImage = item.imagesUrl?.[0] || '/placeholder.jpg';
-
-    return (
-      <div className="pcard" key={item.id}>
-        {/* Project Cover Image */}
-        <div className="pcard-img">
-          <img 
-            src={cardImage} 
-            alt={item.title} 
-            loading="lazy" 
-          />
-        </div>
-
-        <div className="pcard-body">
-          <div className="pcard-top">
-            <span className="loc">{item.location}</span>
-            <span className="status ready">{item.rera ? 'MahaRERA Verified' : 'New Launch'}</span>
+      <section id="projects">
+        <div className="wrap">
+          <div className="section-head section-head-flex">
+            <div>
+              <p className="eyebrow">Active Inventory</p>
+              <h2>Latest Projects</h2>
+            </div>
+            <Link href="/agent" className="btn btn-solid">+ Add New Project</Link>
           </div>
 
-          <h3>{item.title}</h3>
-          <div className="divider" />
-
-          <div className="meta">
-            <div className="price">
-              {item.price}
-              <small>Starting Price</small>
-            </div>
-            <Link 
-              href={`/projects/${item.slug}`} 
-              className="btn btn-solid" 
-              style={{ padding: '6px 14px', fontSize: '12px' }}
-            >
-              View Details →
-            </Link>
-          </div>
-        </div>
-      </div>
-    );
-  })}
-</div>
-            </div>
-
-            <div className="pcard-top">
-              <span className="loc">{item.location}</span>
-              <span className="status ready">{item.rera ? 'MahaRERA Verified' : 'New Launch'}</span>
-            </div>
-            
-            <h3>{item.title}</h3>
-            <div className="divider" />
-            
-            <div className="meta">
-              <div className="price">
-                {item.price}
-                <small>Starting Price</small>
+          <div className="finder">
+            <div className="finder-bar">
+              <div className="finder-field finder-search">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="11" cy="11" r="7" />
+                  <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                </svg>
+                <input
+                  type="text"
+                  placeholder="Search by project name…"
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  aria-label="Search by project name"
+                />
               </div>
-              <Link href={`/projects/${item.slug}`} className="btn btn-solid" style={{ padding: '6px 14px', fontSize: '12px' }}>
-                View Details →
-              </Link>
+
+              <div className="finder-divider" />
+
+              <select value={corridor} onChange={(e) => setCorridor(e.target.value)} aria-label="Filter by corridor">
+                <option>All corridors</option>
+                {CORRIDORS.map((c) => (
+                  <option key={c.node} value={c.title}>{c.title}</option>
+                ))}
+              </select>
+
+              <div className="finder-divider" />
+
+              <select value={budget} onChange={(e) => setBudget(e.target.value)} aria-label="Filter by budget">
+                {BUDGETS.map((b) => (
+                  <option key={b} value={b}>{b}</option>
+                ))}
+              </select>
+            </div>
+
+            <div className="finder-meta">
+              <span>{filteredProjects.length} of {projects.length} projects match</span>
+              {filtersActive && (
+                <button type="button" className="finder-clear" onClick={clearFilters}>Clear filters</button>
+              )}
             </div>
           </div>
-        ))}
-      </div>
-    )}
-  </div>
-</section>
+
+          {projects.length === 0 ? (
+            <p style={{ color: 'var(--ink-soft)', marginTop: '16px' }}>
+              No custom projects added yet. <Link href="/agent" style={{ color: 'var(--brick)', fontWeight: 600 }}>Add one now →</Link>
+            </p>
+          ) : filteredProjects.length === 0 ? (
+            <p style={{ color: 'var(--ink-soft)', marginTop: '16px' }}>
+              No projects match your filters. <button type="button" className="finder-clear" onClick={clearFilters} style={{ marginLeft: '4px' }}>Clear filters</button>
+            </p>
+          ) : (
+            <div className="project-grid" style={{ marginTop: '24px' }}>
+              {filteredProjects.map((item) => {
+                // Get the first uploaded image from imagesUrl, or use fallback
+                const cardImage = item.imagesUrl?.[0] || '/placeholder.jpg';
+
+                return (
+                  <div className="pcard" key={item.id}>
+                    {/* Cover image links straight to the project's detail page */}
+                    <Link href={`/projects/${item.slug}`} className="pcard-img" aria-label={`View details for ${item.title}`}>
+                      <img
+                        src={cardImage}
+                        alt={item.title}
+                        loading="lazy"
+                      />
+                    </Link>
+
+                    <div className="pcard-body">
+                      <div className="pcard-top">
+                        <span className="loc">{item.location}</span>
+                        <span className="status ready">{item.rera ? 'MahaRERA Verified' : 'New Launch'}</span>
+                      </div>
+
+                      <Link href={`/projects/${item.slug}`} className="pcard-title-link">
+                        <h3>{item.title}</h3>
+                      </Link>
+                      <div className="divider" />
+
+                      <div className="meta">
+                        <div className="price">
+                          {item.price}
+                          <small>Starting Price</small>
+                        </div>
+                        <Link
+                          href={`/projects/${item.slug}`}
+                          className="btn btn-solid"
+                          style={{ padding: '6px 14px', fontSize: '12px' }}
+                        >
+                          View Details →
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+      </section>
 
       <section id="markets" style={{ background: 'var(--stone-2)' }}>
         <div className="wrap">
@@ -650,6 +630,39 @@ export default function HomePage() {
           text-decoration: underline;
         }
 
+        /* Project card image link + hover states */
+        .pcard {
+          transition: box-shadow 0.2s ease, transform 0.2s ease;
+        }
+
+        .pcard:hover {
+          box-shadow: 0 8px 24px rgba(20, 20, 20, 0.08);
+          transform: translateY(-2px);
+        }
+
+        .pcard-img {
+          position: relative;
+          display: block;
+          overflow: hidden;
+        }
+
+        .pcard-img img {
+          transition: transform 0.35s ease;
+        }
+
+        .pcard-img:hover img {
+          transform: scale(1.05);
+        }
+
+        .pcard-title-link {
+          color: inherit;
+          text-decoration: none;
+        }
+
+        .pcard-title-link:hover h3 {
+          color: var(--brick, #9e4429);
+        }
+
         /* Mobile Breakpoint Adjustments */
         @media (max-width: 768px) {
           .hero-grid {
@@ -701,6 +714,21 @@ export default function HomePage() {
           .finder-search {
             border: 1px solid rgba(20, 20, 20, 0.08);
             border-radius: 8px;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .wrap {
+            padding: 0 12px;
+          }
+
+          .project-grid {
+            grid-template-columns: 1fr;
+          }
+
+          nav ul {
+            gap: 10px;
+            font-size: 14px;
           }
         }
       `}</style>
