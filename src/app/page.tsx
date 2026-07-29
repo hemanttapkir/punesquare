@@ -263,11 +263,11 @@ export default function HomePage() {
           <div className="pcard" key={item.id}>
             {/* Added Image Container */}
             <div className="pcard-img">
-              <img 
-                src={item.image || item.imageUrl || '/placeholder.jpg'} 
-                alt={item.title} 
-                loading="lazy" 
-              />
+             <img 
+  src={(item as any).image || (item as any).imageUrl || '/placeholder.jpg'} 
+  alt={item.title} 
+  loading="lazy" 
+/>
             </div>
 
             <div className="pcard-top">
