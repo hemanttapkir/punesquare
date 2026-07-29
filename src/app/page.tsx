@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { getProjects, Project } from '../lib/projects';
 
-// Shared corridor data
+// Static Data Constants
 const CORRIDORS = [
   {
     node: '01', tag: 'West IT Corridor', title: 'Hinjewadi – Wakad – Baner',
@@ -46,7 +46,15 @@ const CORRIDORS = [
 
 const BUDGETS = ['Any budget', 'Under ₹80L', '₹80L – ₹1.5Cr', '₹1.5Cr – ₹3Cr', '₹3Cr and above'];
 
+const BUILDERS = [
+  'Godrej Properties', 'Lodha Group', 'Kolte Patil Developers', 'Shapoorji Pallonji Group',
+  'VTP Realty', 'Vilas Javdekar Developers', 'Mahindra Lifespace', 'Gera Developer',
+  'Hiranandani Group', 'Puravankara Group', 'Birla Estates', 'Kalpataru Group',
+  'Sobha Limited', 'Adani Realty',
+];
+
 function parsePriceToLakh(price: string): number | null {
+  if (!price) return null;
   const match = price.match(/([\d.]+)\s*(L|Cr)/i);
   if (!match) return null;
   const value = parseFloat(match[1]);
@@ -74,16 +82,22 @@ export default function HomePage() {
   }, []);
 
   const filteredProjects = useMemo(() => {
+    const trimmedQuery = query.trim().toLowerCase();
+
     return projects.filter((item) => {
-      if (query.trim() && !item.title.toLowerCase().includes(query.trim().toLowerCase())) {
+      // 1. Search Query Match
+      if (trimmedQuery && !(item.title || '').toLowerCase().includes(trimmedQuery)) {
         return false;
       }
+      // 2. Corridor Filter Match
       if (corridor !== 'All corridors') {
-        const c = CORRIDORS.find((c) => c.title === corridor);
-        if (c && !c.localities.some((loc) => item.location.toLowerCase().includes(loc))) {
+        const c = CORRIDORS.find((cor) => cor.title === corridor);
+        const itemLocation = (item.location || '').toLowerCase();
+        if (c && !c.localities.some((loc) => itemLocation.includes(loc))) {
           return false;
         }
       }
+      // 3. Budget Filter Match
       if (budget !== 'Any budget') {
         const lakh = parsePriceToLakh(item.price);
         if (lakh !== null && !matchesBudget(lakh, budget)) return false;
@@ -317,12 +331,7 @@ export default function HomePage() {
             <h2>Developers active in Pune right now</h2>
           </div>
           <div className="builder-row reveal">
-            {[
-              'Godrej Properties', 'Lodha Group', 'Kolte Patil Developers', 'Shapoorji Pallonji Group',
-              'VTP Realty', 'Vilas Javdekar Developers', 'Mahindra Lifespace', 'Gera Developer',
-              'Hiranandani Group', 'Puravankara Group', 'Birla Estates', 'Kalpataru Group',
-              'Sobha Limited', 'Adani Realty',
-            ].map((name) => (
+            {BUILDERS.map((name) => (
               <span className="chip" key={name}>{name}</span>
             ))}
           </div>
