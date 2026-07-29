@@ -197,91 +197,102 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section id="projects">
-        <div className="wrap">
-          <div className="section-head section-head-flex">
-            <div>
-              <p className="eyebrow">Active Inventory</p>
-              <h2>Latest Projects</h2>
-            </div>
-            <Link href="/agent" className="btn btn-solid">+ Add New Project</Link>
-          </div>
+   <section id="projects">
+  <div className="wrap">
+    <div className="section-head section-head-flex">
+      <div>
+        <p className="eyebrow">Active Inventory</p>
+        <h2>Latest Projects</h2>
+      </div>
+      <Link href="/agent" className="btn btn-solid">+ Add New Project</Link>
+    </div>
 
-          <div className="finder">
-            <div className="finder-bar">
-              <div className="finder-field finder-search">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <circle cx="11" cy="11" r="7" />
-                  <line x1="21" y1="21" x2="16.65" y2="16.65" />
-                </svg>
-                <input
-                  type="text"
-                  placeholder="Search by project name…"
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  aria-label="Search by project name"
-                />
-              </div>
-
-              <div className="finder-divider" />
-
-              <select value={corridor} onChange={(e) => setCorridor(e.target.value)} aria-label="Filter by corridor">
-                <option>All corridors</option>
-                {CORRIDORS.map((c) => (
-                  <option key={c.node} value={c.title}>{c.title}</option>
-                ))}
-              </select>
-
-              <div className="finder-divider" />
-
-              <select value={budget} onChange={(e) => setBudget(e.target.value)} aria-label="Filter by budget">
-                {BUDGETS.map((b) => (
-                  <option key={b} value={b}>{b}</option>
-                ))}
-              </select>
-            </div>
-
-            <div className="finder-meta">
-              <span>{filteredProjects.length} of {projects.length} projects match</span>
-              {filtersActive && (
-                <button type="button" className="finder-clear" onClick={clearFilters}>Clear filters</button>
-              )}
-            </div>
-          </div>
-
-          {projects.length === 0 ? (
-            <p style={{ color: 'var(--ink-soft)', marginTop: '16px' }}>
-              No custom projects added yet. <Link href="/agent" style={{ color: 'var(--brick)', fontWeight: 600 }}>Add one now →</Link>
-            </p>
-          ) : filteredProjects.length === 0 ? (
-            <p style={{ color: 'var(--ink-soft)', marginTop: '16px' }}>
-              No projects match your filters. <button type="button" className="finder-clear" onClick={clearFilters} style={{ marginLeft: '4px' }}>Clear filters</button>
-            </p>
-          ) : (
-            <div className="project-grid" style={{ marginTop: '24px' }}>
-              {filteredProjects.map((item) => (
-                <div className="pcard" key={item.id}>
-                  <div className="pcard-top">
-                    <span className="loc">{item.location}</span>
-                    <span className="status ready">{item.rera ? 'MahaRERA Verified' : 'New Launch'}</span>
-                  </div>
-                  <h3>{item.title}</h3>
-                  <div className="divider" />
-                  <div className="meta">
-                    <div className="price">
-                      {item.price}
-                      <small>Starting Price</small>
-                    </div>
-                    <Link href={`/projects/${item.slug}`} className="btn btn-solid" style={{ padding: '6px 14px', fontSize: '12px' }}>
-                      View Details →
-                    </Link>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
+    <div className="finder">
+      <div className="finder-bar">
+        <div className="finder-field finder-search">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="11" cy="11" r="7" />
+            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+          </svg>
+          <input
+            type="text"
+            placeholder="Search by project name…"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            aria-label="Search by project name"
+          />
         </div>
-      </section>
+
+        <div className="finder-divider" />
+
+        <select value={corridor} onChange={(e) => setCorridor(e.target.value)} aria-label="Filter by corridor">
+          <option>All corridors</option>
+          {CORRIDORS.map((c) => (
+            <option key={c.node} value={c.title}>{c.title}</option>
+          ))}
+        </select>
+
+        <div className="finder-divider" />
+
+        <select value={budget} onChange={(e) => setBudget(e.target.value)} aria-label="Filter by budget">
+          {BUDGETS.map((b) => (
+            <option key={b} value={b}>{b}</option>
+          ))}
+        </select>
+      </div>
+
+      <div className="finder-meta">
+        <span>{filteredProjects.length} of {projects.length} projects match</span>
+        {filtersActive && (
+          <button type="button" className="finder-clear" onClick={clearFilters}>Clear filters</button>
+        )}
+      </div>
+    </div>
+
+    {projects.length === 0 ? (
+      <p style={{ color: 'var(--ink-soft)', marginTop: '16px' }}>
+        No custom projects added yet. <Link href="/agent" style={{ color: 'var(--brick)', fontWeight: 600 }}>Add one now →</Link>
+      </p>
+    ) : filteredProjects.length === 0 ? (
+      <p style={{ color: 'var(--ink-soft)', marginTop: '16px' }}>
+        No projects match your filters. <button type="button" className="finder-clear" onClick={clearFilters} style={{ marginLeft: '4px' }}>Clear filters</button>
+      </p>
+    ) : (
+      <div className="project-grid" style={{ marginTop: '24px' }}>
+        {filteredProjects.map((item) => (
+          <div className="pcard" key={item.id}>
+            {/* Added Image Container */}
+            <div className="pcard-img">
+              <img 
+                src={item.image || item.imageUrl || '/placeholder.jpg'} 
+                alt={item.title} 
+                loading="lazy" 
+              />
+            </div>
+
+            <div className="pcard-top">
+              <span className="loc">{item.location}</span>
+              <span className="status ready">{item.rera ? 'MahaRERA Verified' : 'New Launch'}</span>
+            </div>
+            
+            <h3>{item.title}</h3>
+            <div className="divider" />
+            
+            <div className="meta">
+              <div className="price">
+                {item.price}
+                <small>Starting Price</small>
+              </div>
+              <Link href={`/projects/${item.slug}`} className="btn btn-solid" style={{ padding: '6px 14px', fontSize: '12px' }}>
+                View Details →
+              </Link>
+            </div>
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
+</section>
 
       <section id="markets" style={{ background: 'var(--stone-2)' }}>
         <div className="wrap">
