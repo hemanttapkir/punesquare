@@ -301,8 +301,8 @@ export default function HomePage() {
     );
   })}
 </div>
-            </div>
-</section>
+      })}
+      </section>
 
       <section id="markets" style={{ background: 'var(--stone-2)' }}>
         <div className="wrap">
