@@ -19,6 +19,8 @@ export default function AgentPortal() {
   const [floorPlans, setFloorPlans] = useState<FloorPlan[]>([
     { typology: '2 BHK', carpetArea: '808 sq.ft.', price: '₹96.3 L' },
   ]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const toggleAmenity = (item: string) => {
     setAmenities(prev => prev.includes(item) ? prev.filter(a => a !== item) : [...prev, item]);
@@ -39,22 +41,33 @@ export default function AgentPortal() {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    const created = saveProject({
-      ...formData,
-      imagesUrl,
-      floorPlans,
-      amenities,
-      landmarks: formData.landmarks.split(',').map(s => s.trim()).filter(Boolean),
-    });
+    setSubmitError(null);
+    setIsSubmitting(true);
 
-    // Guard against undefined or missing slugs before routing
-    if (created && created.slug) {
-      router.push(`/projects/${created.slug}`);
-    } else {
+    try {
+      const created = await saveProject({
+        ...formData,
+        imagesUrl,
+        floorPlans,
+        amenities,
+        landmarks: formData.landmarks.split(',').map(s => s.trim()).filter(Boolean),
+      });
+
+      // Guard against a null result or missing slug before routing
+      if (created && created.slug) {
+        router.push(`/projects/${created.slug}`);
+        return;
+      }
+
       console.error('Failed to generate project slug:', created);
+      setSubmitError('Could not publish this listing. Please check the fields and try again.');
+    } catch (err) {
+      console.error('saveProject threw:', err);
+      setSubmitError('Something went wrong while publishing. Please try again.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -113,7 +126,18 @@ export default function AgentPortal() {
         <textarea rows={2} placeholder="Specifications (e.g. 800x1600mm Vitrified Tiles, Gypsum Finish, Concealed Wiring)" value={formData.specs} onChange={e => setFormData({...formData, specs: e.target.value})} className="form-input" />
         <input type="text" placeholder="Nearby Landmarks (Comma separated: Hinjewadi IT Park, DY Patil University, Sai Mall)" value={formData.landmarks} onChange={e => setFormData({...formData, landmarks: e.target.value})} className="form-input" />
 
-        <button type="submit" className="btn btn-solid" style={{ width: '100%', padding: '12px' }}>Publish Complete Listing →</button>
+        {submitError && (
+          <p style={{ color: '#9E4429', fontSize: '13px', margin: 0 }}>{submitError}</p>
+        )}
+
+        <button
+          type="submit"
+          className="btn btn-solid"
+          style={{ width: '100%', padding: '12px', opacity: isSubmitting ? 0.6 : 1, cursor: isSubmitting ? 'not-allowed' : 'pointer' }}
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? 'Publishing…' : 'Publish Complete Listing →'}
+        </button>
       </form>
 
       <style jsx>{`
