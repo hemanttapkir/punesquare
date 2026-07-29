@@ -70,7 +70,13 @@ export default function HomePage() {
   const [budget, setBudget] = useState('Any budget');
 
   useEffect(() => {
-    setProjects(getProjects());
+    let active = true;
+    getProjects().then((data) => {
+      if (active) setProjects(data);
+    });
+    return () => {
+      active = false;
+    };
   }, []);
 
   const filteredProjects = useMemo(() => {
