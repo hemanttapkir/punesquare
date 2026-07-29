@@ -258,16 +258,49 @@ export default function HomePage() {
         No projects match your filters. <button type="button" className="finder-clear" onClick={clearFilters} style={{ marginLeft: '4px' }}>Clear filters</button>
       </p>
     ) : (
-      <div className="project-grid" style={{ marginTop: '24px' }}>
-        {filteredProjects.map((item) => (
-          <div className="pcard" key={item.id}>
-            {/* Added Image Container */}
-            <div className="pcard-img">
-             <img 
-  src={(item as any).image || (item as any).imageUrl || '/placeholder.jpg'} 
-  alt={item.title} 
-  loading="lazy" 
-/>
+    <div className="project-grid" style={{ marginTop: '24px' }}>
+  {filteredProjects.map((item) => {
+    // Get the first uploaded image from imagesUrl, or use fallback
+    const cardImage = item.imagesUrl?.[0] || '/placeholder.jpg';
+
+    return (
+      <div className="pcard" key={item.id}>
+        {/* Project Cover Image */}
+        <div className="pcard-img">
+          <img 
+            src={cardImage} 
+            alt={item.title} 
+            loading="lazy" 
+          />
+        </div>
+
+        <div className="pcard-body">
+          <div className="pcard-top">
+            <span className="loc">{item.location}</span>
+            <span className="status ready">{item.rera ? 'MahaRERA Verified' : 'New Launch'}</span>
+          </div>
+
+          <h3>{item.title}</h3>
+          <div className="divider" />
+
+          <div className="meta">
+            <div className="price">
+              {item.price}
+              <small>Starting Price</small>
+            </div>
+            <Link 
+              href={`/projects/${item.slug}`} 
+              className="btn btn-solid" 
+              style={{ padding: '6px 14px', fontSize: '12px' }}
+            >
+              View Details →
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  })}
+</div>
             </div>
 
             <div className="pcard-top">
