@@ -302,29 +302,6 @@ export default function HomePage() {
   })}
 </div>
             </div>
-
-            <div className="pcard-top">
-              <span className="loc">{item.location}</span>
-              <span className="status ready">{item.rera ? 'MahaRERA Verified' : 'New Launch'}</span>
-            </div>
-            
-            <h3>{item.title}</h3>
-            <div className="divider" />
-            
-            <div className="meta">
-              <div className="price">
-                {item.price}
-                <small>Starting Price</small>
-              </div>
-              <Link href={`/projects/${item.slug}`} className="btn btn-solid" style={{ padding: '6px 14px', fontSize: '12px' }}>
-                View Details →
-              </Link>
-            </div>
-          </div>
-        ))}
-      </div>
-    )}
-  </div>
 </section>
 
       <section id="markets" style={{ background: 'var(--stone-2)' }}>
